@@ -1,0 +1,77 @@
+specVersion: 0.0.3
+description: >-
+  A secure & decentralized way to address resources on and off the blockchain
+  using simple, human-readable names. Access domains and transfer history.
+repository: https://github.com/portalnetwork/ecns-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: ECNSRegistry
+    network: mainnet
+    source:
+      address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e'
+      abi: ECNSRegistry
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      file: ./src/ecnsRegistry.ts
+      entities:
+        - Domain
+        - Account
+        - Resolver
+      abis:
+        - name: ECNSRegistry
+          file: ./abis/ECNSRegistry.json
+      eventHandlers:
+        - event: 'Transfer(indexed bytes32,address)'
+          handler: handleTransfer
+        - event: 'NewOwner(indexed bytes32,indexed bytes32,address)'
+          handler: handleNewOwner
+        - event: 'NewResolver(indexed bytes32,address)'
+          handler: handleNewResolver
+        - event: 'NewTTL(indexed bytes32,uint64)'
+          handler: handleNewTTL
+  - kind: ethereum/contract
+    name: BaseRegistrar
+    network: mainnet
+    source:
+      address: '0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85'
+      abi: BaseRegistrar
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      file: ./src/etcRegistrar.ts
+      entities:
+        - Registration
+        - NameRegistered
+        - NameMigrated
+        - NameRenewed
+        - NameTransferred
+      abis:
+        - name: BaseRegistrar
+          file: ./abis/BaseRegistrar.json
+      eventHandlers:
+        - event: 'Transfer(indexed address,indexed address,indexed uint256)'
+          handler: handleNameTransferred
+  - kind: ethereum/contract
+    name: ETCRegistrarController
+    network: mainnet
+    source:
+      address: '0x283Af0B28c62C092C9727F1Ee09c02CA627EB7F5'
+      abi: ETCRegistrarController
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      file: ./src/etcRegistrar.ts
+      entities:
+        - Registration
+      abis:
+        - name: ETCRegistrarController
+          file: ./abis/ETCRegistrarController.json
+      eventHandlers:
+        - event: 'NameRegistered(string,indexed bytes32,indexed address,uint256,uint256)'
+          handler: handleNameRegisteredByController

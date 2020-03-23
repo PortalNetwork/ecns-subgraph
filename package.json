@@ -1,0 +1,30 @@
+{
+  "name": "ecns-subgraph",
+  "version": "1.0.0",
+  "repository": "https://github.com/portalnetwork/ecns-subgraph",
+  "license": "MIT",
+  "scripts": {
+    "build": "graph build",
+    "build-contract": "solcjs contracts/* --abi -o abis --overwrite && solcjs contracts/* --bin -o bin --overwrite",
+    "codegen": "graph codegen --output-dir src/types/",
+    "create-local": "graph create ecns-subgraph --node http://127.0.0.1:8020",
+    "deploy-local": "graph deploy ecns-subgraph --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
+    "test": "truffle test"
+  },
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.17.1",
+    "@graphprotocol/graph-ts": "^0.17.0"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "babel-register": "^6.26.0",
+    "bluebird": "^3.7.2",
+    "eth-ens-namehash": "^2.0.8",
+    "openzeppelin-solidity": "2.1.3",
+    "truffle": "^5.0.4",
+    "truffle-contract": "^4.0.5",
+    "truffle-flattener": "^1.4.2",
+    "truffle-hdwallet-provider": "^1.0.4",
+    "web3-utils": "^1.2.6"
+  }
+}
