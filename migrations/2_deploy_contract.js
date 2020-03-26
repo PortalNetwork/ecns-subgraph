@@ -35,7 +35,7 @@ module.exports = async function(deployer) {
   console.log('.etc', getRootNodeFromTLD('etc'));
 
   // Deploy SimplePriceOracle
-  await deployer.deploy(SimplePriceOracle, 100);
+  await deployer.deploy(SimplePriceOracle, 1);
   
   // Deploy ECNSRegistry
   await deployer.deploy(ECNSRegistry);
@@ -51,8 +51,8 @@ module.exports = async function(deployer) {
   await deployer.deploy(ETCRegistrarController, 
     BaseRegistrarImplementation.address, 
     SimplePriceOracle.address,
-    30, 
-    600
+    600, 
+    86400
   );
 
   // Deploy PublicResolver
