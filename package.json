@@ -7,8 +7,10 @@
     "build": "graph build",
     "build-contract": "solcjs contracts/* --abi -o abis --overwrite && solcjs contracts/* --bin -o bin --overwrite",
     "codegen": "graph codegen --output-dir src/types/",
-    "create-local": "graph create ecns-subgraph --node http://127.0.0.1:8020",
-    "deploy-local": "graph deploy ecns-subgraph --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
+    "create-local": "graph create ecns-subgraph --node http://127.0.0.1:8020/",
+    "deploy-local": "graph deploy ecns-subgraph --ipfs http://localhost:5001 --node http://127.0.0.1:8020/",
+    "remove-local": "graph remove ecns-subgraph --node http://127.0.0.1:8020",
+    "watch-local": "graph deploy ecns-subgraph --watch --debug --node http://127.0.0.1:8020/ --ipfs http://localhost:5001",
     "test": "truffle test"
   },
   "devDependencies": {
@@ -26,6 +28,7 @@
     "truffle-flattener": "^1.4.2",
     "truffle-hdwallet-provider": "^1.0.4",
     "truffle-privatekey-provider": "^1.3.0",
+    "web3": "^1.2.6",
     "web3-utils": "^1.2.6"
   }
 }

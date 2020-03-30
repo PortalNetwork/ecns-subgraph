@@ -15,10 +15,10 @@ module.exports = {
       network_id: '1',
       gas: 4000000
     },
+    // truffle deploy --network kotti
     kotti: {
       provider: new PrivateKeyProvider(process.env.PRIVATE_KEY, 'https://www.ethercluster.com/kotti'),
-      network_id: '*',
-      gas: 4000000
+      network_id: '*'
     }
   },
   compilers: {
