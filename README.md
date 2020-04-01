@@ -29,3 +29,11 @@ A user commits to a hash, the preimage of which contains the name to be register
 
 ### SimplePriceOracle
 SimplePriceOracle is a trivial implementation of the pricing oracle for the EthRegistrarController that always returns a fixed price per domain per year, determined by the contract owner.
+
+### ECNS Contracts
+
+ECNS Contract             | Network    | Contract Address                           | Transaction Hash
+--------------------------|------------|--------------------------------------------|-----------------------------------------------
+ECNSRegistry              | Kotti      | 0xdf9e5ce912412ab6af0dd46acff0ffc112bbe36e | 0xf5cf698aa4cd8b66a0271318206049f227a61a388f3f2ed4295200655bb24034
+ETHRegistrarController    | Kotti      | 0xb4cc8deec867c8352ec8f86afc945590629ae260 | 0x2f796509547c742e42fa904aecdec04c3afe56a7715b98363cff961918c4a349
+PublicResolver            | Kotti      | 0x89e77b691c8e3718b808015dbca094d35d7c37cc | 0x8cdf00cd13897220ea92e7e2c2b3f7f60456ca3c0f8b4aeca5e939a7b8c45c44
