@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "repository": "https://github.com/portalnetwork/ecns-subgraph",
   "license": "MIT",
+  "main": "index.js",
   "scripts": {
     "build": "graph build",
     "build-contract": "solcjs contracts/* --abi -o abis --overwrite && solcjs contracts/* --bin -o bin --overwrite",
