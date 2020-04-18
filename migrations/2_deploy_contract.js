@@ -3,6 +3,7 @@ const SimplePriceOracle = artifacts.require("./SimplePriceOracle.sol");
 const BaseRegistrarImplementation = artifacts.require('./BaseRegistrarImplementation.sol');
 const ETCRegistrarController = artifacts.require('./ETCRegistrarController.sol');
 const PublicResolver = artifacts.require('./PublicResolver.sol');
+const ReverseRegistrar = artifacts.require('./ReverseRegistrar.sol');
 
 const web3 = new (require('web3'))();
 const namehash = require('eth-ens-namehash');
@@ -27,6 +28,8 @@ function getRootNodeFromTLD(tld) {
  * 3. BaseRegistrarImplementation
  * 4. ECNSRegistrarController
  * 5. PublicResolver
+ * 6. ReverseRegistrar
+ * 
  */
 
 module.exports = async function(deployer) {
@@ -57,6 +60,8 @@ module.exports = async function(deployer) {
 
   // Deploy PublicResolver
   await deployer.deploy(PublicResolver, ECNSRegistry.address);
+
+  await deployer.deploy(ReverseRegistrar, ECNSRegistry.address, PublicResolver.address);
   /*deployer.deploy(ECNS).then(() => {
     // Deploy the HashRegistrar and bind it with ENS
     // The last argument `0` specifies the auction start date to `now`

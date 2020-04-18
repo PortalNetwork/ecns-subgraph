@@ -3,6 +3,7 @@ const PublicResolver = artifacts.require('./PublicResolver.sol');
 const BaseRegistrar = artifacts.require('./BaseRegistrarImplementation');
 const ETCRegistrarController = artifacts.require('./ETCRegistrarController');
 const SimplePriceOracle = artifacts.require('./SimplePriceOracle');
+const ReverseRegistrar = artifacts.require('./ReverseRegistrar');
 const Promise = require('bluebird');
 const namehash = require('eth-ens-namehash');
 const sha3 = require('web3-utils').sha3;
@@ -53,18 +54,23 @@ contract('ETCRegistrarController', function (accounts) {
   let baseRegistrar;
   let etcRegistrarController;
   let priceOracle;
+  let reverseRegistrar;
 
-  
   const ownerAccount = accounts[0];
   const userAccount = accounts[1];
+  const reverseAccount = namehash.hash(accounts[0].slice(2).toLowerCase() + ".addr.reverse");
 
   before(async () => {
     ecnsRegistry = await ECNSRegistry.new();
 
     publicResolver = await PublicResolver.new(ecnsRegistry.address);
 
+    reverseRegistrar = await ReverseRegistrar.new(ecnsRegistry.address, publicResolver.address);
+
     baseRegistrar = await BaseRegistrar.new(ecnsRegistry.address, namehash.hash('etc'), {from: ownerAccount});
     await ecnsRegistry.setSubnodeOwner('0x0', sha3('etc'), baseRegistrar.address);
+    await ecnsRegistry.setSubnodeOwner('0x0', sha3('reverse'), ownerAccount, {from: ownerAccount});
+    await ecnsRegistry.setSubnodeOwner(namehash.hash('reverse'), sha3('addr'), reverseRegistrar.address, {from: ownerAccount});
 
     priceOracle = await SimplePriceOracle.new(1);
 
@@ -192,6 +198,10 @@ contract('ETCRegistrarController', function (accounts) {
   it('should allow the registrar owner to withdraw funds', async () => {
     await etcRegistrarController.withdraw({gasPrice: 0, from: ownerAccount});
     assert.equal(await web3.eth.getBalance(etcRegistrarController.address), 0);
+  });
+
+  it('should calculate reverse address hash correctly', async () => {
+    assert.equal((await reverseRegistrar.node(ownerAccount)), reverseAccount);
   });
 });
 
